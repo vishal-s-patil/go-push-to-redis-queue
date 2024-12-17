@@ -123,13 +123,17 @@ func push_to_redis(batchSize, redisPort int, ch chan string, wg *sync.WaitGroup,
 }
 
 func main() {
-	fileName := flag.String("fileName", "test.txt.gz", "input file name with values to push to the redis queue")
-	redisQueueName := flag.String("redisQueueName", "test", "redis queue name")
+	fileName := flag.String("fileName", "", "input file name with values to push to the redis queue")
+	redisQueueName := flag.String("redisQueueName", "", "redis queue name")
 	redisHostName := flag.String("redisHostName", "localhost", "redis queue name")
 	batchSize := flag.Int("batchSize", 1000, "redis pipe batch size of rpush")
 	redisPort := flag.Int("redisPort", 6379, "")
 	isGzip := flag.Bool("isGzip", true, "")
 	flag.Parse()
+
+	if *fileName == "" || *redisQueueName == "" {
+		log.Fatal("Please pass all the required arguments/flags")
+	}
 
 	channelBuffer := 1000
 
