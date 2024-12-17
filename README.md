@@ -19,3 +19,4 @@ Go version: `go1.22.1`
 | redisHostName  | false        | localhost                |
 | redisPort      | false        | default redis port(6379) |
 | batchSize      | false        | 1000                     | 
+| isGzip         | false        | true                     |
