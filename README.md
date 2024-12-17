@@ -4,7 +4,7 @@ Go version: `go1.22.1`
 ### Steps to run
 1. Download or clone the repository\
     `git clone https://github.com/vishal-s-patil/go-push-to-redis-queue.git`
-2. Enter the directory\
+2. Enter into the directory\
 `cd go-push-to-redis-queue` 
 3. Download the required packages\
     `go mod tidy`
