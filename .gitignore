@@ -1,0 +1,6 @@
+*.gz
+*.csv
+*.txt
+ignore/
+temp/
+dummy/
