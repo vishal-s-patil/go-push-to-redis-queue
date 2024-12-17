@@ -128,6 +128,7 @@ func main() {
 	redisHostName := flag.String("redisHostName", "localhost", "redis queue name")
 	batchSize := flag.Int("batchSize", 1000, "redis pipe batch size of rpush")
 	redisPort := flag.Int("redisPort", 6379, "")
+	isGzip := flag.Bool("isGzip", true, "")
 	flag.Parse()
 
 	channelBuffer := 1000
@@ -136,7 +137,11 @@ func main() {
 	ch := make(chan string, channelBuffer)
 
 	wg.Add(1)
-	go ReadFileGzip(ch, &wg, *fileName)
+	if *isGzip {
+		go ReadFileGzip(ch, &wg, *fileName)
+	} else {
+		go ReadFile(ch, &wg, *fileName)
+	}
 
 	wg.Add(1)
 	go push_to_redis(*batchSize, *redisPort, ch, &wg, *redisQueueName, *redisHostName)
