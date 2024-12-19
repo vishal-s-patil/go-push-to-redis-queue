@@ -91,7 +91,6 @@ func push_to_redis(batchSize, redisPort int, ch chan string, wg *sync.WaitGroup,
 	redisClient, ctx := ConnectToRedis(redisHost, redisPort)
 	pipe := redisClient.Pipeline()
 	uids := make([]string, 0, channelBuffer)
-
 	for line := range ch {
 		uid := strings.TrimSpace(line)
 		uids = append(uids, uid)
@@ -110,7 +109,7 @@ func push_to_redis(batchSize, redisPort int, ch chan string, wg *sync.WaitGroup,
 		}
 	}
 
-	if len(uids) >= batchSize {
+	if len(uids) >= 0 {
 		for _, item := range uids {
 			pipe.RPush(ctx, redisQueueName, item)
 		}
@@ -120,6 +119,7 @@ func push_to_redis(batchSize, redisPort int, ch chan string, wg *sync.WaitGroup,
 			log.Fatalf("Error pushing to Redis: %v", err)
 		}
 	}
+
 }
 
 func main() {
